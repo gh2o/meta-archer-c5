@@ -1,0 +1,5 @@
+define KMACHINE archer-c5
+define KTYPE standard
+define KARCH mips
+
+kconf hardware archer-c5.cfg
