@@ -3,3 +3,4 @@ define KTYPE kexec
 define KARCH mips
 
 kconf hardware archer-c5.cfg
+kconf hardware archer-c5-kexec.cfg
