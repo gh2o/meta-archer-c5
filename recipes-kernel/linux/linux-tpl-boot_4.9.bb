@@ -29,6 +29,8 @@ PV = "${LINUX_VERSION}+git${SRCPV}"
 
 MULTI_PROVIDER_WHITELIST = "virtual/kernel"
 KERNEL_IMAGETYPE = "vmlinux.bin"
+INITRAMFS_IMAGE = "tpl-boot-image"
+INITRAMFS_IMAGE_BUNDLE = "1"
 
 COMPATIBLE_MACHINE_archer-c5 = "archer-c5"
 SRC_URI_append_archer-c5 = " file://archer-c5-kexec.scc "
@@ -55,8 +57,8 @@ do_tplink_image[dirs] = "${B}"
 python do_tplink_image() {
 
     # compress vmlinux.bin via lzma
-    bb.process.run(['lzmp', '-1fk', d.expand('${KERNEL_OUTPUT_DIR}/vmlinux.bin')])
-    with open(d.expand('${KERNEL_OUTPUT_DIR}/vmlinux.bin.lzma'), 'rb') as fd:
+    bb.process.run(['lzmp', '-1fk', d.expand('${KERNEL_OUTPUT_DIR}/vmlinux.bin.initramfs')])
+    with open(d.expand('${KERNEL_OUTPUT_DIR}/vmlinux.bin.initramfs.lzma'), 'rb') as fd:
         vmlinux_lzma = fd.read()
 
     # generate output image
@@ -79,7 +81,7 @@ do_deploy_append() {
     ln -sf tplImage-${KERNEL_IMAGE_BASE_NAME} ${DEPLOYDIR}/tplImage
 }
 
-addtask tplink_image after do_compile before do_deploy
+addtask tplink_image after do_bundle_initramfs before do_deploy
 
 # extra tasks
 addtask kernel_version_sanity_check after do_kernel_metadata do_kernel_checkout before do_compile
