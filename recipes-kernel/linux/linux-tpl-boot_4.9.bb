@@ -14,20 +14,17 @@ LINUX_KERNEL_TYPE = "kexec"
 KERNEL_FEATURES = ""
 KMACHINE = "${MACHINE}"
 KBRANCH = "standard/base"
-KMETA = "meta"
 
 SRC_URI = " \
     git://git.yoctoproject.org/linux-yocto-4.9.git;name=machine;branch=${KBRANCH} \
-    git://git.yoctoproject.org/yocto-kernel-cache;type=kmeta;name=meta;branch=yocto-4.9;destsuffix=${KMETA} \
     git://github.com/openwrt/openwrt.git;name=openwrt;protocol=https;branch=master;destsuffix=openwrt \
     "
 
-SRCREV_machine = "f7a6d45fff853173bfbf61706aeffcd1d1e99467"
-SRCREV_meta = "ef2f5d9a0ac1c5ac60e76b18b0bb3393be450336"
-SRCREV_openwrt = "6c2e1ff80f52b939405fe0c14577c584602ae432"
-SRCREV_FORMAT = "meta_machine"
+SRCREV_machine = "3e598a7089eef1fe04d5b87cc154295302960e62"
+SRCREV_openwrt = "f621b539512e5b6c83dd2de1bc2dba06e40cd7ea"
+SRCREV_FORMAT = "machine_openwrt"
 
-LINUX_VERSION = "4.9.78"
+LINUX_VERSION = "4.9.82"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
 MULTI_PROVIDER_WHITELIST = "virtual/kernel"
