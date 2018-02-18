@@ -23,8 +23,6 @@ SRCREV_FORMAT = "kernel_openwrt"
 LINUX_VERSION = "4.9.82"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
-MULTI_PROVIDER_WHITELIST = "virtual/kernel"
-
 COMPATIBLE_MACHINE_archer-c5 = "archer-c5"
 SRC_URI_append_archer-c5 = " file://archer-c5-${LINUX_KERNEL_TYPE}.scc "
 
