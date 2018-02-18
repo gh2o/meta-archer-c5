@@ -28,7 +28,7 @@ LINUX_VERSION = "4.9.82"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
 MULTI_PROVIDER_WHITELIST = "virtual/kernel"
-KERNEL_IMAGETYPES = "vmlinux.bin vmlinux"
+KERNEL_IMAGETYPE = "vmlinux.bin"
 INITRAMFS_IMAGE = "tpl-boot-image"
 INITRAMFS_IMAGE_BUNDLE = "1"
 
@@ -82,6 +82,11 @@ do_deploy_append() {
 }
 
 addtask tplink_image after do_bundle_initramfs before do_deploy
+
+# we don't generate any packages
+PACKAGES = ""
+PACKAGES_remove = "kernel-devicetree kernel-image-vmlinux.bin"
+do_install[noexec] = "1"
 
 # extra tasks
 addtask kernel_version_sanity_check after do_kernel_metadata do_kernel_checkout before do_compile
