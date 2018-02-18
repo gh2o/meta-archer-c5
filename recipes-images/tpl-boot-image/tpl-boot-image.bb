@@ -8,4 +8,4 @@ KERNELDEPMODDEPEND = ""
 
 USE_DEVFS := "0"
 IMAGE_DEVICE_TABLES := "${THISDIR}/tpl-boot-image-devtable.txt"
-PACKAGE_INSTALL = "base-files kexec-tools busybox"
+PACKAGE_INSTALL = "base-files kexec-tools tpl-boot-init busybox"

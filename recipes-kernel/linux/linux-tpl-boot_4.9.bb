@@ -28,7 +28,7 @@ LINUX_VERSION = "4.9.82"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
 MULTI_PROVIDER_WHITELIST = "virtual/kernel"
-KERNEL_IMAGETYPE = "vmlinux.bin"
+KERNEL_IMAGETYPES = "vmlinux.bin vmlinux"
 INITRAMFS_IMAGE = "tpl-boot-image"
 INITRAMFS_IMAGE_BUNDLE = "1"
 
