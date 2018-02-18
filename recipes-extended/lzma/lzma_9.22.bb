@@ -16,7 +16,7 @@ do_compile() {
 
 do_install() {
     cd CPP/7zip/Bundles/LzmaCon
-    install -D -m0755 lzmp ${D}/usr/bin/lzmp
+    install -D -m0755 lzmp ${D}${bindir}/lzmp
 }
 
 BBCLASSEXTEND = "native nativesdk"
