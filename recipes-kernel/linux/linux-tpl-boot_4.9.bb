@@ -4,6 +4,7 @@ LICENSE = "GPLv2"
 
 LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
+inherit ccache
 inherit kernel
 inherit kernel-yocto
 
@@ -18,10 +19,12 @@ KMETA = "meta"
 SRC_URI = " \
     git://git.yoctoproject.org/linux-yocto-4.9.git;name=machine;branch=${KBRANCH} \
     git://git.yoctoproject.org/yocto-kernel-cache;type=kmeta;name=meta;branch=yocto-4.9;destsuffix=${KMETA} \
+    git://github.com/openwrt/openwrt.git;name=openwrt;protocol=https;branch=master;destsuffix=openwrt \
     "
 
 SRCREV_machine = "f7a6d45fff853173bfbf61706aeffcd1d1e99467"
 SRCREV_meta = "ef2f5d9a0ac1c5ac60e76b18b0bb3393be450336"
+SRCREV_openwrt = "6c2e1ff80f52b939405fe0c14577c584602ae432"
 SRCREV_FORMAT = "meta_machine"
 
 LINUX_VERSION = "4.9.78"
@@ -34,11 +37,28 @@ COMPATIBLE_MACHINE_archer-c5 = "archer-c5"
 SRC_URI_append_archer-c5 = " file://archer-c5-kexec.scc "
 LOAD_ADDRESS_archer-c5 = "0x80060000"
 
+do_patch_append_archer-c5() {
+    mkdir -p ${S}/patches
+    rm -f ${S}/patches/series
+    for x in \
+        ${WORKDIR}/openwrt/target/linux/generic/backport-4.9/*.patch \
+        ${WORKDIR}/openwrt/target/linux/generic/pending-4.9/*.patch \
+        ${WORKDIR}/openwrt/target/linux/generic/hack-4.9/*.patch \
+        ${WORKDIR}/openwrt/target/linux/ar71xx/patches-4.9/*.patch
+    do
+        cp $x ${S}/patches
+        basename $x >> ${S}/patches/series
+    done
+    (cd ${S} && quilt push -a)
+    cp -Tr ${WORKDIR}/openwrt/target/linux/generic/files ${S}
+    cp -Tr ${WORKDIR}/openwrt/target/linux/ar71xx/files ${S}
+}
+
 do_tplink_image[dirs] = "${B}"
 python do_tplink_image() {
 
     # compress vmlinux.bin via lzma
-    bb.process.run(['lzmp', '-fk', d.expand('${KERNEL_OUTPUT_DIR}/vmlinux.bin')])
+    bb.process.run(['lzmp', '-1fk', d.expand('${KERNEL_OUTPUT_DIR}/vmlinux.bin')])
     with open(d.expand('${KERNEL_OUTPUT_DIR}/vmlinux.bin.lzma'), 'rb') as fd:
         vmlinux_lzma = fd.read()
 
