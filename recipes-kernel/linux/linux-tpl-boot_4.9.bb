@@ -13,16 +13,16 @@ DEPENDS += "lzma-native"
 LINUX_KERNEL_TYPE = "kexec"
 KERNEL_FEATURES = ""
 KMACHINE = "${MACHINE}"
-KBRANCH = "standard/base"
+KBRANCH = "linux-4.9.y"
 
 SRC_URI = " \
-    git://git.yoctoproject.org/linux-yocto-4.9.git;name=machine;branch=${KBRANCH} \
+    git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;name=kernel;branch=${KBRANCH} \
     git://github.com/openwrt/openwrt.git;name=openwrt;protocol=https;branch=master;destsuffix=openwrt \
     "
 
-SRCREV_machine = "3e598a7089eef1fe04d5b87cc154295302960e62"
+SRCREV_kernel = "3e598a7089eef1fe04d5b87cc154295302960e62"
 SRCREV_openwrt = "f621b539512e5b6c83dd2de1bc2dba06e40cd7ea"
-SRCREV_FORMAT = "machine_openwrt"
+SRCREV_FORMAT = "kernel_openwrt"
 
 LINUX_VERSION = "4.9.82"
 PV = "${LINUX_VERSION}+git${SRCPV}"
