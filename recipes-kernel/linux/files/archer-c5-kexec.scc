@@ -1,0 +1,5 @@
+define KMACHINE archer-c5
+define KTYPE kexec
+define KARCH mips
+
+include archer-c5.scc
