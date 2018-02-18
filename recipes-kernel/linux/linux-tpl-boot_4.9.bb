@@ -53,12 +53,13 @@ python do_tplink_image() {
     write_word(0x84, len(vmlinux_lzma))
 
     # write output image
-    with open(d.expand('${KERNEL_OUTPUT_DIR}/tplImage', 'wb')) as fd:
+    with open(d.expand('${KERNEL_OUTPUT_DIR}/tplImage'), 'wb') as fd:
         fd.write(out_image)
 }
 
 do_deploy_append() {
-    false
+    install -m0644 ${KERNEL_OUTPUT_DIR}/tplImage ${DEPLOYDIR}/tplImage-${KERNEL_IMAGE_BASE_NAME}
+    ln -sf tplImage-${KERNEL_IMAGE_BASE_NAME} ${DEPLOYDIR}/tplImage
 }
 
 addtask tplink_image after do_compile before do_deploy
