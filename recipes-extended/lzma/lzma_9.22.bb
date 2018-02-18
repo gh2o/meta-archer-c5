@@ -1,7 +1,7 @@
 SUMMARY = "Old LZMA utils"
 LICENSE = "PD"
 
-SRC_URI = "http://archive.ubuntu.com/ubuntu/pool/main/l/lzma/${BPN}_${PV}.orig.tar.gz"
+SRC_URI = "http://archive.ubuntu.com/ubuntu/pool/main/l/${BPN}/${BPN}_${PV}.orig.tar.gz"
 SRC_URI[md5sum] = "bfdcf75308860aa983f7e4293e93b652"
 SRC_URI[sha256sum] = "0fa2ec459701e403b72662cf920d252466910161fa2077dd0f6d7c078002da19"
 
@@ -16,7 +16,7 @@ do_compile() {
 
 do_install() {
     cd CPP/7zip/Bundles/LzmaCon
-    install -D -m0755 lzmp ${D}/usr/bin/lzma
+    install -D -m0755 lzmp ${D}/usr/bin/lzmp
 }
 
 BBCLASSEXTEND = "native nativesdk"

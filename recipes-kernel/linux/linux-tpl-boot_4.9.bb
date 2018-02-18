@@ -37,10 +37,8 @@ LOAD_ADDRESS_archer-c5 = "0x80060000"
 do_tplink_image[dirs] = "${B}"
 python do_tplink_image() {
 
-    raise Exception(os.environ['PATH'])
-
     # compress vmlinux.bin via lzma
-    bb.process.run(['lzma', '-fk', d.expand('${KERNEL_OUTPUT_DIR}/vmlinux.bin')])
+    bb.process.run(['lzmp', '-fk', d.expand('${KERNEL_OUTPUT_DIR}/vmlinux.bin')])
     with open(d.expand('${KERNEL_OUTPUT_DIR}/vmlinux.bin.lzma'), 'rb') as fd:
         vmlinux_lzma = fd.read()
 
