@@ -4,4 +4,22 @@ mount -t proc proc /proc
 mount -t sysfs sys /sys
 mount -t devtmpfs dev /dev
 
-exec /bin/sh </dev/ttyS0 >/dev/ttyS0 2>&1
+usb_led=/sys/devices/platform/leds-gpio/leds/tp-link:green:usb1
+echo timer > $usb_led/trigger
+echo 100 > $usb_led/delay_on
+echo 100 > $usb_led/delay_off
+
+echo ">>> Press 's' for a shell."
+
+mkdir -p /root
+while ! mount LABEL=tpl /root; do
+    while read -t 1 -n 1 input; do
+        if [ "$input" = "s" ]; then
+            /bin/sh
+        fi
+    done
+done
+
+echo ">> Root mounted."
+
+exec /bin/sh
