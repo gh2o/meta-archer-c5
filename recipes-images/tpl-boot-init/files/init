@@ -15,11 +15,29 @@ mkdir -p /root
 while ! mount LABEL=tpl /root; do
     while read -t 1 -n 1 input; do
         if [ "$input" = "s" ]; then
+            echo
             /bin/sh
         fi
     done
 done
+echo ">>> Root mounted."
 
-echo ">> Root mounted."
+mkdir -p /kexec
+if ! cp /root/boot/vmlinux /kexec; then
+    echo "!!! Failed to find vmlinux and cmdline!"
+    exec /bin/sh
+fi
+echo ">>> Copied vmlinux and cmdline."
 
+umount /root
+echo ">>> Root unmounted."
+
+echo > /kexec/dtb
+kexec /kexec/vmlinux \
+    --type=elf-mips \
+    --dtb=/kexec/dtb \
+    --command-line='console=ttyS0,115200 debug machtype=ARCHER-C5 root=/dev/mmc0 rootwait' \
+    --force
+
+echo "!!! kexec failed!"
 exec /bin/sh
