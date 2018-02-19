@@ -20,7 +20,7 @@ SRC_URI = " \
 
 SRCREV_kernel = "3e598a7089eef1fe04d5b87cc154295302960e62"
 SRCREV_openwrt = "f621b539512e5b6c83dd2de1bc2dba06e40cd7ea"
-SRCREV_FORMAT = "kernel_openwrt"
+SRCREV_FORMAT = "kernel+openwrt"
 
 LINUX_VERSION = "4.9.82"
 PV = "${LINUX_VERSION}+git${SRCPV}"
