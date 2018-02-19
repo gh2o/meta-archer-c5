@@ -26,11 +26,7 @@ LINUX_VERSION = "4.9.82"
 PV = "${LINUX_VERSION}+g0+git${SRCPV}"
 
 COMPATIBLE_MACHINE_archer-c5 = "archer-c5"
-SRC_URI_append_archer-c5 = " \
-    file://archer-c5-${LINUX_KERNEL_TYPE}.scc \
-    file://archer-c5-${LINUX_KERNEL_TYPE}.cfg \
-    file://archer-c5.cfg \
-    "
+SRC_URI_append_archer-c5 = " file://archer-c5-${LINUX_KERNEL_TYPE}.scc "
 
 do_patch_append_archer-c5() {
     mkdir -p ${S}/patches
