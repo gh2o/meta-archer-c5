@@ -23,7 +23,7 @@ SRCREV_openwrt = "f621b539512e5b6c83dd2de1bc2dba06e40cd7ea"
 SRCREV_FORMAT = "kernel+openwrt"
 
 LINUX_VERSION = "4.9.82"
-PV = "${LINUX_VERSION}+git${SRCPV}"
+PV = "${LINUX_VERSION}+g0+git${SRCPV}"
 
 COMPATIBLE_MACHINE_archer-c5 = "archer-c5"
 SRC_URI_append_archer-c5 = " \
