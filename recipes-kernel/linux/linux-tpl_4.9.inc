@@ -27,22 +27,20 @@ PV = "${LINUX_VERSION}+g0+git${SRCPV}"
 
 COMPATIBLE_MACHINE_archer-c5 = "archer-c5"
 SRC_URI_append_archer-c5 = " file://archer-c5-${LINUX_KERNEL_TYPE}.scc "
+OPENWRT_PATCH_DIRS_archer-c5 = " \
+    openwrt/target/linux/generic/backport-4.9 \
+    openwrt/target/linux/generic/pending-4.9 \
+    openwrt/target/linux/generic/hack-4.9 \
+    openwrt/target/linux/ar71xx/patches-4.9 \
+    "
 
-do_patch_append_archer-c5() {
-    mkdir -p ${S}/patches
-    rm -f ${S}/patches/series
-    for x in \
-        ${WORKDIR}/openwrt/target/linux/generic/backport-4.9/*.patch \
-        ${WORKDIR}/openwrt/target/linux/generic/pending-4.9/*.patch \
-        ${WORKDIR}/openwrt/target/linux/generic/hack-4.9/*.patch \
-        ${WORKDIR}/openwrt/target/linux/ar71xx/patches-4.9/*.patch
-    do
-        cp $x ${S}/patches
-        basename $x >> ${S}/patches/series
-    done
-    (cd ${S} && quilt push -a)
-    cp -Tr ${WORKDIR}/openwrt/target/linux/generic/files ${S}
-    cp -Tr ${WORKDIR}/openwrt/target/linux/ar71xx/files ${S}
+python do_patch() {
+    from glob import glob
+    patches = []
+    for dir in d.getVar('OPENWRT_PATCH_DIRS').split():
+        patches.extend(glob(os.path.join(d.getVar('WORKDIR'), dir, '*.patch')))
+    d.appendVar('SRC_URI', ' ' + ' '.join('file://' + p for p in patches))
+    bb.build.exec_func('patch_do_patch', d)
 }
 
 # extra tasks
