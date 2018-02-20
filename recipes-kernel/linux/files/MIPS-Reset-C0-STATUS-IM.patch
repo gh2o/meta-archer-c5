@@ -1,0 +1,26 @@
+Index: source/arch/mips/kernel/head.S
+===================================================================
+--- source.orig/arch/mips/kernel/head.S
++++ source/arch/mips/kernel/head.S
+@@ -45,17 +45,17 @@
+ 
+ 	.macro	setup_c0_status_pri
+ #ifdef CONFIG_64BIT
+-	setup_c0_status ST0_KX 0
++	setup_c0_status ST0_KX ST0_IM
+ #else
+-	setup_c0_status 0 0
++	setup_c0_status 0 ST0_IM
+ #endif
+ 	.endm
+ 
+ 	.macro	setup_c0_status_sec
+ #ifdef CONFIG_64BIT
+-	setup_c0_status ST0_KX ST0_BEV
++	setup_c0_status ST0_KX (ST0_BEV|ST0_IM)
+ #else
+-	setup_c0_status 0 ST0_BEV
++	setup_c0_status 0 (ST0_BEV|ST0_IM)
+ #endif
+ 	.endm
+ 
