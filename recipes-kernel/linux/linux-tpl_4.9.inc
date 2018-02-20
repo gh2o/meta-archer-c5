@@ -28,6 +28,10 @@ PV = "${LINUX_VERSION}+g0+git${SRCPV}"
 
 COMPATIBLE_MACHINE_archer-c5 = "archer-c5"
 SRC_URI_append_archer-c5 = " file://archer-c5-${LINUX_KERNEL_TYPE}.scc "
+OPENWRT_FILES_DIRS_archer-c5 = " \
+    openwrt/target/linux/generic/files \
+    openwrt/target/linux/ar71xx/files \
+    "
 OPENWRT_PATCH_DIRS_archer-c5 = " \
     openwrt/target/linux/generic/backport-4.9 \
     openwrt/target/linux/generic/pending-4.9 \
@@ -37,9 +41,13 @@ OPENWRT_PATCH_DIRS_archer-c5 = " \
 
 python do_patch() {
     from glob import glob
+    workdir = d.getVar('WORKDIR')
+    s = d.getVar('S')
+    for dir in d.getVar('OPENWRT_FILES_DIRS').split():
+        bb.process.run(['cp', '-Tr', os.path.join(workdir, dir), s])
     patches = []
     for dir in d.getVar('OPENWRT_PATCH_DIRS').split():
-        patches.extend(glob(os.path.join(d.getVar('WORKDIR'), dir, '*.patch')))
+        patches.extend(glob(os.path.join(workdir, dir, '*.patch')))
     d.appendVar('SRC_URI', ' ' + ' '.join('file://' + p for p in patches))
     bb.build.exec_func('patch_do_patch', d)
 }
