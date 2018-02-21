@@ -1,0 +1,21 @@
+commit cc1edf8eaa90491232cf872b2843529b3b1a191f
+Author: Gavin Li <gavinli@thegavinli.com>
+Date:   Wed Feb 21 11:38:33 2018 -0800
+
+    label reloc
+
+diff --git a/arch/mips/mm/page.c b/arch/mips/mm/page.c
+index 6f804f5960ab..5cbfbde594ca 100644
+--- a/arch/mips/mm/page.c
++++ b/arch/mips/mm/page.c
+@@ -65,8 +65,8 @@ UASM_L_LA(_copy_pref_both)
+ UASM_L_LA(_copy_pref_store)
+ 
+ /* We need one branch and therefore one relocation per target label. */
+-static struct uasm_label labels[5];
+-static struct uasm_reloc relocs[5];
++static struct uasm_label labels[20];
++static struct uasm_reloc relocs[20];
+ 
+ #define cpu_is_r4600_v1_x()	((read_c0_prid() & 0xfffffff0) == 0x00002010)
+ #define cpu_is_r4600_v2_x()	((read_c0_prid() & 0xfffffff0) == 0x00002020)
