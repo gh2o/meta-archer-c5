@@ -26,6 +26,9 @@ SRCREV_FORMAT = "kernel+openwrt"
 LINUX_VERSION = "4.9.82"
 PV = "${LINUX_VERSION}+g0+git${SRCPV}"
 
+# quilt is too slow
+PATCHTOOL = "patch"
+
 COMPATIBLE_MACHINE_archer-c5 = "archer-c5"
 SRC_URI_append_archer-c5 = " file://archer-c5-${LINUX_KERNEL_TYPE}.scc "
 OPENWRT_FILES_DIRS_archer-c5 = " \
