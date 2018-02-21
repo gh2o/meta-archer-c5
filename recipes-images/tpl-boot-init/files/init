@@ -23,7 +23,7 @@ done
 echo ">>> Root mounted."
 
 mkdir -p /kexec
-if ! cp /root/boot/vmlinux /kexec; then
+if ! cp /root/boot/vmlinux /root/boot/cmdline /kexec; then
     echo "!!! Failed to find vmlinux and cmdline!"
     exec /bin/sh
 fi
@@ -36,7 +36,7 @@ echo > /kexec/dtb
 kexec /kexec/vmlinux \
     --type=elf-mips \
     --dtb=/kexec/dtb \
-    --command-line='console=ttyS0,115200 debug machtype=ARCHER-C5 root=/dev/mmc0 rootwait' \
+    --command-line="$(cat /kexec/cmdline)" \
     --force
 
 echo "!!! kexec failed!"
