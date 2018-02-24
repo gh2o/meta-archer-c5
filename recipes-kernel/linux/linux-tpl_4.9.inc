@@ -9,6 +9,7 @@ inherit kernel
 inherit kernel-yocto
 
 S = "${WORKDIR}/source"
+STAGING_KERNEL_DIR = "${S}"
 
 KMACHINE = "${MACHINE}"
 KBRANCH = "linux-4.9.y"
