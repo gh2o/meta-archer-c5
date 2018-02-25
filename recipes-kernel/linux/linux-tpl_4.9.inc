@@ -17,8 +17,6 @@ KBRANCH = "linux-4.9.y"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;name=kernel;branch=${KBRANCH} \
     git://github.com/openwrt/openwrt.git;name=openwrt;protocol=https;branch=master;destsuffix=openwrt \
-    file://MIPS-Reset-C0-STATUS-IM.patch \
-    file://MIPS-UASM-grow-labels-relocs.patch \
     "
 
 SRCREV_kernel = "3e598a7089eef1fe04d5b87cc154295302960e62"
