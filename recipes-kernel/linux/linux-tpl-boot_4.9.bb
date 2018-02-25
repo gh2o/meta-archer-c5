@@ -6,6 +6,7 @@ KERNEL_IMAGETYPE = "vmlinux.bin"
 DEPENDS += "lzma-native"
 
 KERNEL_FEATURES = ""
+KERNEL_EXTRA_ARGS += "load-y=0xffffffff84060000"
 
 INITRAMFS_IMAGE = "tpl-boot-image"
 INITRAMFS_IMAGE_BUNDLE = "1"
@@ -19,7 +20,7 @@ python do_tplink_image() {
         vmlinux_lzma = fd.read()
 
     # generate output image
-    load_addr = 0x80060000
+    load_addr = 0x84060000
     out_image = bytearray(0x200)
     out_image.extend(vmlinux_lzma)
     def write_word(offset, val):
@@ -44,4 +45,3 @@ addtask tplink_image after do_bundle_initramfs before do_deploy
 PACKAGES = ""
 PACKAGES_remove = "kernel-devicetree kernel-image-vmlinux.bin"
 do_install[noexec] = "1"
-
